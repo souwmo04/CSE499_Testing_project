@@ -11,6 +11,28 @@
 
 <div id="dashboard-container">
 
+    <!-- PAGE TITLE & SUBTITLE -->
+    <div class="dashboard-header">
+        <h2 class="page-title">Live Dynamic Dashboard</h2>
+        <p class="subtitle">Visualize time-varying data and ask AI questions about trends.</p>
+    </div>
+
+    <!-- STATS CARDS (TOP SECTION) -->
+    <section class="stats-grid top-stats">
+        <div class="stat-card">
+            <h4>Total Records</h4>
+            <p id="total-records">{{ chart_data.dates|length }}</p>
+        </div>
+        <div class="stat-card">
+            <h4>Last Updated</h4>
+            <p id="last-updated">Just now</p>
+        </div>
+        <div class="stat-card">
+            <h4>Charts Active</h4>
+            <p id="charts-active">3</p>
+        </div>
+    </section>
+
     <!-- KPI SUMMARY CARDS -->
     <div class="kpi-container">
         <div class="kpi-card gold">
@@ -48,44 +70,20 @@
         </div>
     </div>
 
-    <!-- BAR & PIE CHARTS SIDE BY SIDE -->
-    <div class="charts-row">
+    <!-- BAR + PIE CHARTS SIDE BY SIDE -->
+    <div class="chart-flex">
         <!-- Bar Chart -->
-        <div class="chart-card-container">
+        <div class="chart-card">
             <h2 class="section-title">Latest Price Comparison</h2>
-            <div class="chart-card">
-                <canvas id="bar-chart"></canvas>
-            </div>
+            <canvas id="bar-chart"></canvas>
         </div>
 
         <!-- Pie Chart -->
-        <div class="chart-card-container">
+        <div class="chart-card">
             <h2 class="section-title">Price Distribution (Latest)</h2>
-            <div class="chart-card">
-                <canvas id="pie-chart"></canvas>
-            </div>
+            <canvas id="pie-chart"></canvas>
         </div>
     </div>
-
-    <!-- Live Dashboard Section -->
-    <h2 class="page-title">Live Dynamic Dashboard</h2>
-    <p class="subtitle">Visualize time-varying data and ask AI questions about trends.</p>
-
-    <!-- STATS CARDS -->
-    <section class="stats-grid">
-        <div class="stat-card">
-            <h4>Total Records</h4>
-            <p id="total-records">{{ chart_data.dates|length }}</p>
-        </div>
-        <div class="stat-card">
-            <h4>Last Updated</h4>
-            <p id="last-updated">Just now</p>
-        </div>
-        <div class="stat-card">
-            <h4>Charts Active</h4>
-            <p id="charts-active">3</p>
-        </div>
-    </section>
 
     <!-- LINE CHARTS GRID -->
     <section class="charts">
