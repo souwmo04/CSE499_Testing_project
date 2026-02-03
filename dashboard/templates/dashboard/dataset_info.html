@@ -1,0 +1,28 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load custom_tags %}   {# Load your custom filter #}
+
+{% block title %}Dataset • Dynamic Dashboard AI{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Dataset</h2>
+
+<table class="dataset-table">
+    <thead>
+        <tr>
+            {% for col in columns %}
+                <th>{{ col }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+            <tr>
+                {% for col in columns %}
+                    <td>{{ row|get_item:col }}</td>  {# <-- use get_item filter #}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

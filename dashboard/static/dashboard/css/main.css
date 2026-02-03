@@ -1,0 +1,117 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f7f9fc;
+    color: #1f2937;
+    line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+    height: 64px;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.nav-right a {
+    margin-left: 24px;
+    text-decoration: none;
+    color: #374151;
+    font-weight: 500;
+}
+
+.nav-right a:hover {
+    color: #2563eb;
+}
+
+/* Layout */
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* Footer */
+.footer {
+    margin-top: 80px;
+    padding: 24px;
+    text-align: center;
+    font-size: 14px;
+    color: #6b7280;
+}
+/* Hero */
+.hero {
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    color: white;
+    padding: 80px 60px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 18px;
+    max-width: 700px;
+    margin: auto;
+    opacity: 0.95;
+}
+
+.hero-buttons {
+    margin-top: 32px;
+}
+
+.btn {
+    padding: 14px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    margin: 0 10px;
+}
+
+.primary {
+    background: white;
+    color: #2563eb;
+}
+
+.secondary {
+    border: 2px solid white;
+    color: white;
+}
+
+/* Features */
+.features {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+}
+
+.feature-card {
+    background: white;
+    padding: 28px;
+    border-radius: 14px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.04);
+}
+
+.feature-card h3 {
+    margin-bottom: 12px;
+}

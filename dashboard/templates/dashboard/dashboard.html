@@ -1,0 +1,73 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block title %}Dashboard • Dynamic Dashboard AI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'dashboard/css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<h2 class="page-title">Live Dynamic Dashboard</h2>
+<p class="subtitle">Visualize time-varying data and ask AI questions about trends.</p>
+
+<!-- STATS CARDS -->
+<section class="stats-grid">
+    <div class="stat-card">
+        <h4>Total Records</h4>
+        <p id="total-records">{{ chart_data.dates|length }}</p>
+    </div>
+    <div class="stat-card">
+        <h4>Last Updated</h4>
+        <p id="last-updated">Just now</p>
+    </div>
+    <div class="stat-card">
+        <h4>Charts Active</h4>
+        <p id="charts-active">3</p>
+    </div>
+</section>
+
+<!-- CHARTS GRID -->
+<section class="charts">
+    <div class="chart-box">
+        <canvas id="chart-1"></canvas>
+    </div>
+    <div class="chart-box">
+        <canvas id="chart-2"></canvas>
+    </div>
+    <div class="chart-box">
+        <canvas id="chart-3"></canvas>
+    </div>
+</section>
+
+<!-- SNAPSHOT BUTTON (ADDED BELOW CHARTS) -->
+<div class="snapshot-action">
+    <button id="saveSnapshotBtn">📸 Save Snapshot</button>
+</div>
+
+<form id="csrf-form">
+    {% csrf_token %}
+</form>
+
+
+<!-- ASK AI PANEL -->
+<section id="ask-ai" class="ask-ai">
+    <h3>Ask AI About This Dashboard</h3>
+    <div class="ai-input-group">
+        <input type="text" placeholder="Type your question here..." id="ai-question"/>
+        <button id="ask-ai-btn">Ask</button>
+    </div>
+    <div id="ai-answer" class="ai-answer"></div>
+</section>
+
+<!-- Pass chart_data to JS -->
+<script>
+    const chartData = {{ chart_data|safe }};
+</script>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'dashboard/js/chart_manager.js' %}"></script>
+<script src="{% static 'dashboard/js/vlm_interface.js' %}"></script>
+
+{% endblock %}

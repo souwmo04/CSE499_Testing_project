@@ -1,0 +1,41 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Home • Dynamic Dashboard AI{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <h1>Understand Your Data.<br>Ask Questions. Get Answers.</h1>
+    <p>
+        A dynamic AI-powered dashboard that updates automatically from CSV data
+        and allows intelligent visual question answering.
+    </p>
+
+    <div class="hero-buttons">
+        <a href="/dashboard/" class="btn primary">View Dashboard</a>
+        <a href="/dashboard/#ask-ai" class="btn secondary">Ask AI Questions</a>
+    </div>
+</section>
+
+<section class="features">
+    <div class="feature-card">
+        <h3>📈 Dynamic Charts</h3>
+        <p>Automatically generated graphs from CSV datasets.</p>
+    </div>
+
+    <div class="feature-card">
+        <h3>🤖 Visual AI</h3>
+        <p>Ask natural language questions about charts and dashboards.</p>
+    </div>
+
+    <div class="feature-card">
+        <h3>🔄 Auto Updates</h3>
+        <p>Dashboard refreshes when CSV data changes.</p>
+    </div>
+
+    <div class="feature-card">
+        <h3>🧠 Research Ready</h3>
+        <p>Designed for analytical reasoning and academic evaluation.</p>
+    </div>
+</section>
+
+{% endblock %}

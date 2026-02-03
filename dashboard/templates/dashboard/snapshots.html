@@ -1,0 +1,25 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+<div class="snapshots-container">
+    <h2>Saved Dashboard Snapshots</h2>
+
+    {% if snapshots %}
+        <div class="snapshot-grid">
+            {% for snapshot in snapshots %}
+            <div class="snapshot-card">
+                <img src="{{ snapshot.image.url }}" alt="Snapshot" />
+                <div class="snapshot-meta">
+                    <p><strong>Saved at:</strong> {{ snapshot.created_at|date:"Y-m-d H:i:s" }}</p>
+                    <p>{{ snapshot.gold_summary }}</p>
+                    <p>{{ snapshot.silver_summary }}</p>
+                    <p>{{ snapshot.oil_summary }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No snapshots yet. Capture one from the dashboard.</p>
+    {% endif %}
+</div>
+{% endblock %}
