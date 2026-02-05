@@ -3,10 +3,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Dynamic Dashboard AI{% endblock %}</title>
 
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="{% static 'dashboard/css/main.css' %}">
@@ -17,13 +18,13 @@
 <!-- NAVBAR -->
 <nav class="navbar">
     <div class="nav-left">
-        <span class="logo">📊 DynamicDashboardAI</span>
+        <a href="/" class="logo">📊 DynamicDashboardAI</a>
     </div>
     <div class="nav-right">
-        <a href="/">Home</a>
-        <a href="/dashboard/">Dashboard</a>
-        <a href="/snapshots/">Snapshots</a>
-        <a href="/dataset/">Dataset</a>
+        <a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a>
+        <a href="/dashboard/" class="{% if '/dashboard' in request.path %}active{% endif %}">Dashboard</a>
+        <a href="/snapshots/" class="{% if '/snapshots' in request.path %}active{% endif %}">Snapshots</a>
+        <a href="/dataset/" class="{% if '/dataset' in request.path %}active{% endif %}">Dataset</a>
     </div>
 </nav>
 
@@ -34,7 +35,7 @@
 
 <!-- FOOTER -->
 <footer class="footer">
-    <p>© 2026 Dynamic Dashboard AI • Built for Research & Analytics</p>
+    <p>© 2026 Dynamic Dashboard AI • AI-Powered Financial Analytics with Ollama + LLaVA</p>
 </footer>
 
 </body>

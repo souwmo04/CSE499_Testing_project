@@ -1,25 +1,472 @@
 {% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block title %}Snapshots • Dynamic Dashboard AI{% endblock %}
+
+{% block extra_css %}
+<style>
+/* =============================================================================
+   SNAPSHOTS PAGE STYLES
+   ============================================================================= */
+.snapshots-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.snapshots-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.snapshots-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 12px;
+}
+
+.snapshots-subtitle {
+    font-size: 16px;
+    color: #64748b;
+}
+
+.snapshots-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 16px;
+}
+
+/* Grid Layout */
+.snapshots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 30px;
+}
+
+/* Snapshot Card */
+.snapshot-card {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.snapshot-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Image Container */
+.snapshot-image-container {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    background: #f8fafc;
+    overflow: hidden;
+}
+
+.snapshot-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    transition: transform 0.4s ease;
+}
+
+.snapshot-card:hover .snapshot-image {
+    transform: scale(1.02);
+}
+
+.snapshot-image-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #94a3b8;
+    font-size: 14px;
+    gap: 8px;
+}
+
+.snapshot-image-error-icon {
+    font-size: 40px;
+}
+
+/* Snapshot ID Badge */
+.snapshot-id-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 6px 14px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 20px;
+}
+
+/* AI Badge */
+.ai-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 6px 14px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Snapshot Meta */
+.snapshot-meta {
+    padding: 24px;
+}
+
+.snapshot-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.snapshot-date {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 16px;
+}
+
+.snapshot-date-icon {
+    font-size: 16px;
+}
+
+/* AI Summary Section */
+.ai-summary {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 16px;
+    border: 1px solid #e2e8f0;
+}
+
+.ai-summary-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #667eea;
+}
+
+.ai-summary-header-icon {
+    font-size: 16px;
+}
+
+.ai-summary-text {
+    font-size: 14px;
+    color: #475569;
+    line-height: 1.6;
+}
+
+.ai-summary-pending {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.ai-summary-pending-icon {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Actions */
+.snapshot-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.snapshot-action-btn {
+    flex: 1;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    text-decoration: none;
+}
+
+.snapshot-action-btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.snapshot-action-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.snapshot-action-btn-secondary {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.snapshot-action-btn-secondary:hover {
+    background: #e2e8f0;
+}
+
+/* Empty State */
+.snapshots-empty {
+    text-align: center;
+    padding: 80px 40px;
+    background: #ffffff;
+    border-radius: 20px;
+    border: 2px dashed #e2e8f0;
+}
+
+.snapshots-empty-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.snapshots-empty-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 12px;
+}
+
+.snapshots-empty-text {
+    font-size: 16px;
+    color: #64748b;
+    margin-bottom: 24px;
+}
+
+.snapshots-empty-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.snapshots-empty-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .snapshots-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .snapshot-image-container {
+        height: 180px;
+    }
+}
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="snapshots-container">
-    <h2>Saved Dashboard Snapshots</h2>
+<div class="snapshots-page">
+    <div class="snapshots-header">
+        <h1 class="snapshots-title">📸 Dashboard Snapshots</h1>
+        <p class="snapshots-subtitle">Captured dashboard states with AI-powered analysis</p>
+        {% if total_count %}
+        <div class="snapshots-count">
+            <span>📊</span>
+            <span>{{ total_count }} Snapshot{{ total_count|pluralize }}</span>
+        </div>
+        {% endif %}
+    </div>
 
     {% if snapshots %}
-        <div class="snapshot-grid">
+        <div class="snapshots-grid">
             {% for snapshot in snapshots %}
-            <div class="snapshot-card">
-                <img src="{{ snapshot.image.url }}" alt="Snapshot" />
+            <div class="snapshot-card" data-snapshot-id="{{ snapshot.id }}">
+                <div class="snapshot-image-container">
+                    {% if snapshot.image_url %}
+                    <img 
+                        src="{{ snapshot.image_url }}" 
+                        alt="Dashboard Snapshot {{ snapshot.id }}"
+                        class="snapshot-image"
+                        loading="lazy"
+                        onerror="this.parentElement.innerHTML = '<div class=\'snapshot-image-error\'><span class=\'snapshot-image-error-icon\'>🖼️</span><span>Image not available</span></div>'"
+                    />
+                    {% else %}
+                    <div class="snapshot-image-error">
+                        <span class="snapshot-image-error-icon">🖼️</span>
+                        <span>Image not available</span>
+                    </div>
+                    {% endif %}
+                    
+                    <span class="snapshot-id-badge">#{{ snapshot.id }}</span>
+                    
+                    {% if snapshot.has_ai_summary %}
+                    <span class="ai-badge">
+                        <span>🤖</span>
+                        <span>AI Analyzed</span>
+                    </span>
+                    {% endif %}
+                </div>
+                
                 <div class="snapshot-meta">
-                    <p><strong>Saved at:</strong> {{ snapshot.created_at|date:"Y-m-d H:i:s" }}</p>
-                    <p>{{ snapshot.gold_summary }}</p>
-                    <p>{{ snapshot.silver_summary }}</p>
-                    <p>{{ snapshot.oil_summary }}</p>
+                    <h3 class="snapshot-title">{{ snapshot.title }}</h3>
+                    <div class="snapshot-date">
+                        <span class="snapshot-date-icon">🕐</span>
+                        <span>{{ snapshot.created_at|date:"F j, Y • g:i A" }}</span>
+                    </div>
+                    
+                    {% if snapshot.ai_summary %}
+                    <div class="ai-summary">
+                        <div class="ai-summary-header">
+                            <span class="ai-summary-header-icon">🤖</span>
+                            <span>AI Analysis</span>
+                        </div>
+                        <p class="ai-summary-text">{{ snapshot.ai_summary|truncatewords:50 }}</p>
+                    </div>
+                    {% elif snapshot.ai_analyzed %}
+                    <div class="ai-summary">
+                        <div class="ai-summary-pending">
+                            <span>⚠️</span>
+                            <span>AI analysis failed. Click Regenerate to retry.</span>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="ai-summary">
+                        <div class="ai-summary-pending">
+                            <span class="ai-summary-pending-icon">⏳</span>
+                            <span>AI analysis pending...</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="snapshot-actions">
+                        {% if snapshot.image_url %}
+                        <a href="{{ snapshot.image_url }}" target="_blank" class="snapshot-action-btn snapshot-action-btn-secondary">
+                            🔍 View Full Size
+                        </a>
+                        {% endif %}
+                        <button 
+                            class="snapshot-action-btn snapshot-action-btn-primary regenerate-btn"
+                            data-snapshot-id="{{ snapshot.id }}"
+                            onclick="regenerateSummary({{ snapshot.id }})"
+                        >
+                            🔄 Regenerate AI
+                        </button>
+                    </div>
                 </div>
             </div>
             {% endfor %}
         </div>
     {% else %}
-        <p>No snapshots yet. Capture one from the dashboard.</p>
+        <div class="snapshots-empty">
+            <div class="snapshots-empty-icon">📸</div>
+            <h2 class="snapshots-empty-title">No Snapshots Yet</h2>
+            <p class="snapshots-empty-text">
+                Capture your first dashboard snapshot to see AI-powered analysis here.
+            </p>
+            <a href="/dashboard/" class="snapshots-empty-btn">
+                <span>📊</span>
+                <span>Go to Dashboard</span>
+            </a>
+        </div>
     {% endif %}
 </div>
+
+<script>
+// CSRF token helper
+function getCSRFToken() {
+    const cookie = document.cookie.split(';').find(c => c.trim().startsWith('csrftoken='));
+    return cookie ? cookie.split('=')[1] : '';
+}
+
+// Regenerate AI summary for a snapshot
+async function regenerateSummary(snapshotId) {
+    const btn = document.querySelector(`[data-snapshot-id="${snapshotId}"].regenerate-btn`);
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '⏳ Analyzing...';
+    btn.disabled = true;
+    
+    try {
+        const response = await fetch('/vlm/regenerate-summary/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken()
+            },
+            body: JSON.stringify({ snapshot_id: snapshotId })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success && data.ai_summary) {
+            // Update the summary display
+            const card = document.querySelector(`[data-snapshot-id="${snapshotId}"]`);
+            const summaryDiv = card.querySelector('.ai-summary');
+            summaryDiv.innerHTML = `
+                <div class="ai-summary-header">
+                    <span class="ai-summary-header-icon">🤖</span>
+                    <span>AI Analysis</span>
+                </div>
+                <p class="ai-summary-text">${data.ai_summary}</p>
+            `;
+            
+            // Add AI badge if not present
+            if (!card.querySelector('.ai-badge')) {
+                const imgContainer = card.querySelector('.snapshot-image-container');
+                const badge = document.createElement('span');
+                badge.className = 'ai-badge';
+                badge.innerHTML = '<span>🤖</span><span>AI Analyzed</span>';
+                imgContainer.appendChild(badge);
+            }
+            
+            btn.innerHTML = '✅ Done!';
+            setTimeout(() => { btn.innerHTML = originalText; btn.disabled = false; }, 2000);
+        } else {
+            btn.innerHTML = '❌ Failed';
+            alert('Error: ' + (data.error || 'Unknown error'));
+            setTimeout(() => { btn.innerHTML = originalText; btn.disabled = false; }, 2000);
+        }
+    } catch (error) {
+        btn.innerHTML = '❌ Error';
+        alert('Network error: ' + error.message);
+        setTimeout(() => { btn.innerHTML = originalText; btn.disabled = false; }, 2000);
+    }
+}
+</script>
 {% endblock %}

@@ -1,41 +1,186 @@
 {% extends 'dashboard/base.html' %}
-{% block title %}Home • Dynamic Dashboard AI{% endblock %}
+{% load static %}
+
+{% block title %}Dynamic Dashboard AI • AI-Powered Financial Analytics{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'dashboard/css/landing.css' %}">
+{% endblock %}
 
 {% block content %}
+<div class="landing-page">
+    
+    <!-- HERO SECTION -->
+    <section class="landing-hero">
+        <!-- Floating orbs for 3D effect -->
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+        <div class="hero-orb hero-orb-3"></div>
+        
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="hero-badge-icon">🤖</span>
+                <span>Powered by AI + LLaVA Vision</span>
+            </div>
+            
+            <h1 class="hero-title">
+                <span class="hero-title-highlight">Understand Your Data.</span><br>
+                Ask Questions. Get Insights.
+            </h1>
+            
+            <p class="hero-subtitle">
+                A dynamic AI-powered dashboard that visualizes financial time-series data, 
+                takes smart snapshots, and answers your questions using cutting-edge 
+                Vision-Language Models.
+            </p>
+            
+            <div class="hero-buttons">
+                <a href="/dashboard/" class="hero-btn hero-btn-primary">
+                    <span class="btn-icon">📊</span>
+                    <span>View Dashboard</span>
+                </a>
+                <a href="/dashboard/#ai-section" class="hero-btn hero-btn-secondary">
+                    <span class="btn-icon">💬</span>
+                    <span>Ask AI Questions</span>
+                </a>
+            </div>
+        </div>
+    </section>
 
-<section class="hero">
-    <h1>Understand Your Data.<br>Ask Questions. Get Answers.</h1>
-    <p>
-        A dynamic AI-powered dashboard that updates automatically from CSV data
-        and allows intelligent visual question answering.
-    </p>
+    <!-- FEATURES SECTION -->
+    <section class="landing-features">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3 class="feature-title">Dynamic Charts</h3>
+                <p class="feature-description">
+                    Automatically generated, real-time graphs from CSV datasets. 
+                    Gold, Silver, and Oil prices visualized beautifully with Chart.js.
+                </p>
+            </div>
 
-    <div class="hero-buttons">
-        <a href="/dashboard/" class="btn primary">View Dashboard</a>
-        <a href="/dashboard/#ask-ai" class="btn secondary">Ask AI Questions</a>
-    </div>
-</section>
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3 class="feature-title">Visual AI Analysis</h3>
+                <p class="feature-description">
+                    Ask natural language questions about your charts. Our AI uses 
+                    LLaVA vision models to analyze dashboard snapshots and provide insights.
+                </p>
+            </div>
 
-<section class="features">
-    <div class="feature-card">
-        <h3>📈 Dynamic Charts</h3>
-        <p>Automatically generated graphs from CSV datasets.</p>
-    </div>
+            <div class="feature-card">
+                <div class="feature-icon">📸</div>
+                <h3 class="feature-title">Smart Snapshots</h3>
+                <p class="feature-description">
+                    Capture dashboard states with one click. Each snapshot is 
+                    automatically analyzed and summarized by AI for future reference.
+                </p>
+            </div>
 
-    <div class="feature-card">
-        <h3>🤖 Visual AI</h3>
-        <p>Ask natural language questions about charts and dashboards.</p>
-    </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3 class="feature-title">Auto Updates</h3>
+                <p class="feature-description">
+                    Dashboard refreshes automatically when CSV data changes. 
+                    Stay updated with the latest market information in real-time.
+                </p>
+            </div>
+        </div>
+    </section>
 
-    <div class="feature-card">
-        <h3>🔄 Auto Updates</h3>
-        <p>Dashboard refreshes when CSV data changes.</p>
-    </div>
+    <!-- STATS SECTION -->
+    <section class="landing-stats">
+        <div class="stats-container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Commodities Tracked</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">5+</div>
+                    <div class="stat-label">Chart Types</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">∞</div>
+                    <div class="stat-label">AI Questions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">24/7</div>
+                    <div class="stat-label">Available</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="feature-card">
-        <h3>🧠 Research Ready</h3>
-        <p>Designed for analytical reasoning and academic evaluation.</p>
-    </div>
-</section>
+    <!-- HOW IT WORKS SECTION -->
+    <section class="landing-how-it-works">
+        <div class="section-header">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">
+                Our Visual-Time-Series Reasoning Pipeline transforms your data into actionable insights
+            </p>
+        </div>
+        
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3 class="step-title">Load Your Data</h3>
+                <p class="step-description">
+                    Upload or modify the CSV file with your financial data. 
+                    The dashboard automatically detects and visualizes changes.
+                </p>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3 class="step-title">Capture Snapshots</h3>
+                <p class="step-description">
+                    Save dashboard states as high-quality images. 
+                    Each snapshot preserves the current market view for analysis.
+                </p>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3 class="step-title">Ask AI Questions</h3>
+                <p class="step-description">
+                    Type natural language questions about trends, correlations, 
+                    or predictions. The AI analyzes the visual data to respond.
+                </p>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <h3 class="step-title">Get Insights</h3>
+                <p class="step-description">
+                    Receive detailed analysis including trend detection, 
+                    volatility assessment, and correlation insights.
+                </p>
+            </div>
+        </div>
+    </section>
 
+    <!-- CTA SECTION -->
+    <section class="landing-cta">
+        <div class="cta-container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Explore Your Data?</h2>
+                <p class="cta-subtitle">
+                    Start analyzing financial trends with AI-powered visual reasoning
+                </p>
+                <div class="hero-buttons">
+                    <a href="/dashboard/" class="hero-btn hero-btn-primary">
+                        <span class="btn-icon">🚀</span>
+                        <span>Get Started</span>
+                    </a>
+                    <a href="/snapshots/" class="hero-btn hero-btn-secondary">
+                        <span class="btn-icon">📸</span>
+                        <span>View Snapshots</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
 {% endblock %}

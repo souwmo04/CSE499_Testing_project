@@ -247,8 +247,8 @@
         </div>
 
         <!-- AI ASSISTANT -->
-        <section class="ai-section">
-            <div class="ai-container">
+        <section class="ai-section" id="ai-section">
+            <div class="ai-container" data-snapshot-id="{{ latest_snapshot_id|default:'' }}">
                 <div class="ai-header">
                     <div class="ai-header-left">
                         <div class="ai-icon">🤖</div>
@@ -266,6 +266,25 @@
                 </div>
                 
                 <div class="ai-body">
+                    <div class="ai-media">
+                        <div class="ai-media-header">
+                            <div class="ai-media-title">AI Analysis (llava)</div>
+                            <div class="ai-media-subtitle">Snapshot preview</div>
+                        </div>
+                        <div class="ai-media-frame" id="ai-media-frame">
+                            {% if latest_snapshot_url %}
+                                <img src="{{ latest_snapshot_url }}?v={{ latest_snapshot_id|default:'' }}" alt="" class="ai-media-image" id="ai-media-image" />
+                            {% else %}
+                                <div class="ai-media-empty" id="ai-media-empty">
+                                    <div class="ai-media-empty-title">No snapshot available</div>
+                                    <div class="ai-media-empty-text">Save a dashboard snapshot to enable visual analysis.</div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% if latest_snapshot_created %}
+                            <div class="ai-media-meta" id="ai-media-meta">Last captured: {{ latest_snapshot_created }}</div>
+                        {% endif %}
+                    </div>
                     <div class="ai-input-group">
                         <input type="text" 
                                placeholder="Example: What's the correlation between gold and oil prices?" 
@@ -282,7 +301,7 @@
                             <div class="placeholder-icon">💡</div>
                             <div class="placeholder-content">
                                 <h4>Ready to help!</h4>
-                                <p>Ask me anything about the dashboard data, trends, or predictions.</p>
+                                <p>Ask a question to analyze the latest dashboard snapshot.</p>
                             </div>
                         </div>
                     </div>
@@ -301,54 +320,6 @@
 <!-- Pass chart_data to JS -->
 <script>
     const chartData = {{ chart_data|safe }};
-    
-    // Snapshot function to ensure clarity
-    document.getElementById('saveSnapshotBtn').addEventListener('click', function() {
-        // Disable animations and transitions temporarily
-        document.body.classList.add('snapshot-mode');
-        
-        // Force repaint
-        void document.body.offsetWidth;
-        
-        // Take snapshot using html2canvas
-        html2canvas(document.getElementById('dashboard-container'), {
-            scale: 2, // High resolution for clarity
-            useCORS: true,
-            backgroundColor: '#ffffff',
-            logging: false,
-            removeContainer: false,
-            onclone: function(clonedDoc) {
-                // Enhance clarity in cloned document
-                const container = clonedDoc.getElementById('dashboard-container');
-                container.style.backgroundColor = '#ffffff';
-                container.style.boxShadow = 'none';
-                container.style.border = 'none';
-                
-                // Make text black for better visibility
-                const allText = clonedDoc.querySelectorAll('*');
-                allText.forEach(el => {
-                    if (window.getComputedStyle(el).color) {
-                        const color = window.getComputedStyle(el).color;
-                        if (color.includes('rgb') && !color.includes('255, 255, 255')) {
-                            el.style.color = '#000000';
-                        }
-                    }
-                });
-            }
-        }).then(canvas => {
-            // Convert to image
-            const image = canvas.toDataURL('image/png', 1.0);
-            
-            // Create download link
-            const link = document.createElement('a');
-            link.download = 'dashboard-snapshot-' + new Date().getTime() + '.png';
-            link.href = image;
-            link.click();
-            
-            // Re-enable animations
-            document.body.classList.remove('snapshot-mode');
-        });
-    });
 </script>
 
 <!-- Chart.js & html2canvas CDN -->
